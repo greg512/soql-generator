@@ -1,6 +1,6 @@
 function generateSOQL(options) {
 
-    let soqlConfig = {
+    var soqlConfig = {
             select: [], // Required. List of SObject fields.  Could also be SOQL inside of parenthesis for relationship queries
             from: null, // Required. SOBject name
             where: [], // List SOQL Where clauses
@@ -17,14 +17,14 @@ function generateSOQL(options) {
     if (Array.isArray(options.select) && options.select.length > 0 && options.from !== null) {
 
         soql = 'SELECT ';
-        options.select.forEach((field, index, fields) => {
+        options.select.forEach(function(field, index, fields) {
             soql += field + (fields.length === index + 1 ? '' : ', ');
         })
 
         soql += ' FROM ' + options.from;
 
         if(options.where.length > 0) {
-            options.where.forEach((whereClause, index, whereClauses) => {
+            options.where.forEach(function(whereClause, index, whereClauses) {
                 soql += (index === 0 ? ' WHERE ' : ' AND ') + whereClause;
             })
         }
@@ -54,7 +54,7 @@ function generateSOQL(options) {
 var robot = (function($) {
     return {
         throwWords: function() {
-            let containerEl = $('.robot'),
+            var containerEl = $('.robot'),
                 destinationEl = $('#Mouth'),
                 words = ['Name', 'Id', 'Account', 'Type = Customer', '10'],
                 duration = 350,
@@ -63,7 +63,7 @@ var robot = (function($) {
 
 
             var robotFoods = document.createDocumentFragment();
-            words.forEach((word, i) => {
+            words.forEach(function(word, i) {
                 console.log(word);
                 var wordEl = document.createElement('span');
                 wordEl.className = 'robot-food';
@@ -73,7 +73,7 @@ var robot = (function($) {
 
             $(containerEl)[0].appendChild(robotFoods);
 
-            $.each($('.robot-food'), (i, el) => {
+            $.each($('.robot-food'), function(i, el) {
                 console.log(el);
                 $('#Mouth').velocity({
                     height: 8
@@ -98,8 +98,8 @@ var robot = (function($) {
                 orderBy: 'Name',
                 limit: 10
             });
-            window.setTimeout(() => {
-                let soqlEl = $('.alert-soql').addClass('robot-vomit').text(soql);
+            window.setTimeout(function() {
+                var soqlEl = $('.alert-soql').addClass('robot-vomit').text(soql);
                 $(soqlEl).velocity({
                     translateX: [0, destinationEl.offset().left],
                     translateY: [0, destinationEl.offset().top],
